@@ -2,11 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import mysql.connector
-from config import DB_CONFIG
+import os
 
 app = FastAPI()
 
-# Enable CORS for frontend calls
+# CORS support
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,6 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Define the Pydantic model
 class Employer(BaseModel):
     company_name: str
     contact_email: str
@@ -22,7 +23,13 @@ class Employer(BaseModel):
 @app.post("/submit")
 async def submit_employer(data: Employer):
     try:
-        conn = mysql.connector.connect(**DB_CONFIG)
+        conn = mysql.connector.connect(
+            host=os.environ.get("DB_HOST"),
+            port=int(os.environ.get("DB_PORT")),
+            user=os.environ.get("DB_USER"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_NAME")
+        )
         cursor = conn.cursor()
         query = """INSERT INTO employers (company_name, contact_email, employee_count)
                    VALUES (%s, %s, %s)"""
