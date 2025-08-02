@@ -1,0 +1,16 @@
+# PostgreSQL Database Settings
+DATABASE_URL=postgresql://groupuser:XrQl28VdWwBztq2rV2tos1KxOtY5jrsU@dpg-d22f5595pdvs738tqmtg-a.render-database.com:5432/groupbenefits
+
+DB_HOST=dpg-d22f5595pdvs738tqmtg-a.render-database.com
+DB_PORT=5432
+DB_NAME=groupbenefits
+DB_USER=groupuser
+DB_PASSWORD=XrQl28VdWwBztq2rV2tos1KxOtY5jrsU
+
+# FastAPI settings (optional)
+# UVICORN_PORT=10000
+# UVICORN_HOST=0.0.0.0
+
+# Add any other app-specific environment variables here
+
+postgresql://groupuser:BQ9sXs5hIYFOJA4tbMft8cZCUQ2Lp3DU@dpg-d272rj95pdvs73c3818g-a/groupbenefits_fulo
