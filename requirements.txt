@@ -1,5 +1,8 @@
-fastapi
-uvicorn
-psycopg2-binary
-mysql-connector-python
-python-dotenv
+fastapi==0.111.0
+uvicorn[standard]==0.29.0     # local debugging
+gunicorn==22.0.0              # Render runs this
+SQLAlchemy==2.0.30
+psycopg2-binary==2.9.9        # sync driver (good enough for now)
+python-dotenv==1.0.1          # local .env loading
+python-multipart==0.0.9       # needed if you accept file uploads
+gunicorn==22.0.0
