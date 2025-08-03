@@ -101,7 +101,7 @@ app = FastAPI(title="Group Benefits Quoting API")
 @app.on_event("startup")
 def on_startup() -> None:
     """Run once per process – create tables and warm a DB connection."""
-    Base.metadata.create_all(bind=engine)
+    #Base.metadata.create_all(bind=engine)
     # quick ping to surface broken DATABASE_URL early
     with engine.connect() as conn:
         conn.execute(text("SELECT 1"))
