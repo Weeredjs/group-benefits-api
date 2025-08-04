@@ -19,7 +19,40 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
+from fastapi_users import FastAPIUsers
+from fastapi_users.authentication import JWTStrategy, AuthenticationBackend
+from fastapi_users.db import SQLAlchemyUserDatabase
+from models import User  # Your SQLAlchemy User model
 
+# Setup user database and authentication
+user_db = SQLAlchemyUserDatabase(User, session)  # session is your SQLAlchemy session
+
+def get_jwt_strategy():
+    return JWTStrategy(secret="SECRET", lifetime_seconds=3600)
+
+auth_backend = AuthenticationBackend(
+    name="jwt",
+    transport=...,  # Use JWTBearerTransport
+    get_strategy=get_jwt_strategy,
+)
+
+fastapi_users = FastAPIUsers(
+    user_db,
+    [auth_backend],
+    User,
+    ... # UserCreate/UserUpdate schemas, etc.
+)
+
+# Add auth routers:
+app.include_router(
+    fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
+)
+app.include_router(
+    fastapi_users.get_register_router(), prefix="/auth", tags=["auth"]
+)
+app.include_router(
+    fastapi_users.get_users_router(), prefix="/users", tags=["users"]
+)
 # ---------------------------------------------------------------------------
 # Database configuration
 # ---------------------------------------------------------------------------
