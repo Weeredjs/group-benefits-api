@@ -8,3 +8,4 @@ python-multipart==0.0.9       # needed if you accept file uploads
 gunicorn==22.0.0
 fastapi-users[sqlalchemy]
 fastapi-users[oauth]
+alembic
