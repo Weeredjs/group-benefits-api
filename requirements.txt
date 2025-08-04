@@ -6,3 +6,5 @@ psycopg2-binary==2.9.9        # sync driver (good enough for now)
 python-dotenv==1.0.1          # local .env loading
 python-multipart==0.0.9       # needed if you accept file uploads
 gunicorn==22.0.0
+fastapi-users[sqlalchemy]
+fastapi-users[oauth]
