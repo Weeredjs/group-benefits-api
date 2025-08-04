@@ -9,3 +9,4 @@ gunicorn==22.0.0
 fastapi-users[sqlalchemy]
 fastapi-users[oauth]
 alembic
+pydantic-settings
