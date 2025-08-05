@@ -7,7 +7,11 @@ from .schemas import UserRead, QuoteCreate, QuoteRead
 from .models import Base, Quote
 from sqlalchemy import select
 from app.api.user_manager import get_user_manager
-DATABASE_URL = "postgresql+asyncpg://user:password@host:port/dbname"  # Set up your Render DB
+import os
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL environment variable not set!")
 from app.api.user_manager import get_user_manager
 from app.api.auth import auth_backend
 from fastapi_users import FastAPIUsers
