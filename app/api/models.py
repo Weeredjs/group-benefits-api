@@ -1,11 +1,11 @@
-# models.py
 from fastapi_users.db import SQLAlchemyBaseUserTable
 from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime, func
 from sqlalchemy.orm import relationship
-from app.db.base import Base  # Use your shared declarative base
+from app.db.base import Base  # <-- use the shared base
 
 class User(SQLAlchemyBaseUserTable[int], Base):
-    __tablename__ = "users"  # Plural, recommended
+    __tablename__ = "users"
+    # no need to declare id/email/etc—they are inherited
 
 class Quote(Base):
     __tablename__ = "quotes"
