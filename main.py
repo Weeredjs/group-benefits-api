@@ -24,7 +24,7 @@ from fastapi_users.authentication import JWTStrategy, AuthenticationBackend
 from fastapi_users.db import SQLAlchemyUserDatabase
 from app.api.models import User
 # Setup user database and authentication
-user_db = SQLAlchemyUserDatabase(User, session)  # session is your SQLAlchemy session
+
 
 def get_jwt_strategy():
     return JWTStrategy(secret="SECRET", lifetime_seconds=3600)
