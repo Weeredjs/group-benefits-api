@@ -12,3 +12,4 @@ alembic
 pydantic-settings
 asyncpg
 pytest
+pydantic-settings
