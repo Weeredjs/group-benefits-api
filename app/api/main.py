@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
-from auth import fastapi_users, auth_backend
+from .auth import fastapi_users, auth_backend
 from app.db.session import get_session as get_async_session
 from schemas import UserRead, QuoteCreate, QuoteRead
 from models import Base, Quote
