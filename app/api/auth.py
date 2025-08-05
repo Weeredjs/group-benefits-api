@@ -19,7 +19,7 @@ class UserCreate(schemas.BaseUserCreate):
 class UserUpdate(schemas.BaseUserUpdate):
     pass
 
-class UserDB(schemas.BaseUserDB[int]):
+class UserRead(schemas.BaseUser[int]):
     pass
 
 # --- Auth Backend ---
@@ -41,5 +41,5 @@ fastapi_users = FastAPIUsers[User, int](
     User,
     UserCreate,
     UserUpdate,
-    UserDB,
+    UserRead,
 )
