@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
-from .auth import fastapi_users, auth_backend
+from .auth import fastapi_users, auth_backend, UserRead, UserCreate, UserUpdate
 from app.db.session import get_session as get_async_session
 from .schemas import UserRead, QuoteCreate, QuoteRead
 from .models import Base, Quote
@@ -41,13 +41,19 @@ async def on_startup():
 
 # Include FastAPI Users routes
 app.include_router(
-    fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"]
+    fastapi_users.get_auth_router(auth_backend),
+    prefix="/auth/jwt",
+    tags=["auth"],
 )
 app.include_router(
-    fastapi_users.get_register_router(), prefix="/auth", tags=["auth"]
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
 )
 app.include_router(
-    fastapi_users.get_users_router(), prefix="/users", tags=["users"]
+    fastapi_users.get_users_router(UserRead, UserUpdate),
+    prefix="/users",
+    tags=["users"],
 )
 
 current_active_user = fastapi_users.current_user(active=True)
