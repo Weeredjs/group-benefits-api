@@ -6,11 +6,16 @@ from app.db.session import get_session as get_async_session
 from schemas import UserRead, QuoteCreate, QuoteRead
 from models import Base, Quote
 from sqlalchemy import select
-
+from app.api.user_manager import get_user_manager
 DATABASE_URL = "postgresql+asyncpg://user:password@host:port/dbname"  # Set up your Render DB
-
+from app.api.user_manager import get_user_manager
+from app.api.auth import auth_backend
+from fastapi_users import FastAPIUsers
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
-
+fastapi_users = FastAPIUsers(
+    get_user_manager,  # <--- NEW: user manager dependency
+    [auth_backend],    # <--- list of auth backends
+)
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
