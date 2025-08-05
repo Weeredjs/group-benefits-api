@@ -5,7 +5,8 @@ from app.db.base import Base  # <-- use the shared base
 
 class User(SQLAlchemyBaseUserTable[int], Base):
     __tablename__ = "users"
-    # no need to declare id/email/etc—they are inherited
+    id = Column(Integer, primary_key=True, index=True)
+    # All other fields (email, hashed_password, etc.) are inherited
 
 class Quote(Base):
     __tablename__ = "quotes"
