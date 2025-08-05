@@ -35,11 +35,4 @@ auth_backend = AuthenticationBackend(
 )
 
 # --- FastAPI Users Instance ---
-fastapi_users = FastAPIUsers[User, int](
-    get_user_db,
-    [auth_backend],
-    User,
-    UserCreate,
-    UserUpdate,
-    UserRead,
-)
+fastapi_users = FastAPIUsers[User, int](get_user_db, [auth_backend])
