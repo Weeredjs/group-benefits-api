@@ -3,7 +3,7 @@
 from fastapi import Depends
 from fastapi_users import FastAPIUsers, schemas
 from fastapi_users.db import SQLAlchemyUserDatabase
-from fastapi_users.authentication import AuthenticationBackend, JWTStrategy
+from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, JWTTransport
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.models import User
@@ -22,17 +22,19 @@ class UserUpdate(schemas.BaseUserUpdate):
 class UserRead(schemas.BaseUser[int]):
     pass
 
-# --- Auth Backend ---
+from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, JWTTransport
+
 SECRET = "YOUR_SUPER_SECRET"
+
+jwt_transport = JWTTransport(tokenUrl="auth/jwt/login")
 
 def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=SECRET, lifetime_seconds=3600)
 
 auth_backend = AuthenticationBackend(
     name="jwt",
-    transport=None,  # No transport needed for JWT in v12+
+    transport=jwt_transport,   # transport IS required for JWT in v12+
     get_strategy=get_jwt_strategy,
 )
-
 # --- FastAPI Users Instance ---
 fastapi_users = FastAPIUsers[User, int](get_user_db, [auth_backend])
