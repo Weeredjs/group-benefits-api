@@ -22,8 +22,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import JWTStrategy, AuthenticationBackend
 from fastapi_users.db import SQLAlchemyUserDatabase
-from models import User  # Your SQLAlchemy User model
-
+from app.api.models import User
 # Setup user database and authentication
 user_db = SQLAlchemyUserDatabase(User, session)  # session is your SQLAlchemy session
 
