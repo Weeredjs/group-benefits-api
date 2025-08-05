@@ -1,20 +1,20 @@
-# main.py
 from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from fastapi.middleware.cors import CORSMiddleware
-from auth import fastapi_users, auth_backend, get_async_session
-from schemas import UserRead, UserCreate, QuoteCreate, QuoteRead
-from models import Base, User, Quote
-from fastapi_users import FastAPIUsers
-from fastapi_users.manager import UserManagerDependency
+from sqlalchemy.ext.asyncio import AsyncSession
+from auth import fastapi_users, auth_backend
+from app.db.session import get_session as get_async_session
+from schemas import UserRead, QuoteCreate, QuoteRead
+from models import Base, Quote
+from sqlalchemy import select
 
 DATABASE_URL = "postgresql+asyncpg://user:password@host:port/dbname"  # Set up your Render DB
+
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 app = FastAPI()
-
 # CORS for local and production frontend:
 app.add_middleware(
     CORSMiddleware,
