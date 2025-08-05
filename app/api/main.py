@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .auth import fastapi_users, auth_backend
 from app.db.session import get_session as get_async_session
 from .schemas import UserRead, QuoteCreate, QuoteRead
-from models import Base, Quote
+from .models import Base, Quote
 from sqlalchemy import select
 from app.api.user_manager import get_user_manager
 DATABASE_URL = "postgresql+asyncpg://user:password@host:port/dbname"  # Set up your Render DB
