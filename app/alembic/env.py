@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 import asyncio
 from logging.config import fileConfig
-from sqlalchemy.ext.asyncio import AsyncEngine
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import pool
 from alembic import context
 import sys
@@ -38,16 +38,17 @@ def do_run_migrations(connection):
     with context.begin_transaction():
         context.run_migrations()
 
+from sqlalchemy.ext.asyncio import create_async_engine
+
 async def run_migrations_online():
-    connectable = AsyncEngine(
-        pool.class_,
-        url=settings.database_url,
-        future=True
+    connectable = create_async_engine(
+        settings.database_url,
+        future=True,
+        # echo=True,  # Optional: shows SQL logs for debugging
     )
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
     await connectable.dispose()
-
 if context.is_offline_mode():
     run_migrations_offline()
 else:
