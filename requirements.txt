@@ -11,3 +11,4 @@ fastapi-users[oauth]
 alembic
 pydantic-settings
 asyncpg
+pytest
