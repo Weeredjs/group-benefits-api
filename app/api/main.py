@@ -32,7 +32,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+print("App starting... 1")
 # Create tables on startup:
 @app.on_event("startup")
 async def on_startup():
@@ -50,12 +50,13 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+print("App starting... 1")
 app.include_router(
     fastapi_users.get_users_router(UserRead, UserUpdate),
     prefix="/users",
     tags=["users"],
 )
-
+print("App starting... 1")
 current_active_user = fastapi_users.current_user(active=True)
 
 # CRUD endpoints for quotes (save/load per user)
@@ -70,7 +71,7 @@ async def create_quote(
     await session.commit()
     await session.refresh(new_quote)
     return new_quote
-
+print("App starting... 1")
 @app.get("/quotes/", response_model=list[QuoteRead])
 async def get_quotes(
     user: UserRead = Depends(current_active_user),
@@ -80,3 +81,6 @@ async def get_quotes(
         select(Quote).where(Quote.user_id == user.id)
     )
     return result.scalars().all()
+@app.get("/ping")
+def ping():
+    return {"ping": "pong"}
