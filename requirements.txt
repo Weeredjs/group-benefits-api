@@ -10,3 +10,4 @@ fastapi-users[sqlalchemy]
 fastapi-users[oauth]
 alembic
 pydantic-settings
+asyncpg
